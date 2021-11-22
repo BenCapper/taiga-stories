@@ -10,7 +10,7 @@ git = Github('TOKEN')
 
 Enter the GitHUb repo namespace
 ~~~
-repo = git.get_repo("USERNAME/REPO_NAME")
+repo = git.get_repo('USERNAME/REPO_NAME')
 ~~~
 
 Enter the exported Taiga export name

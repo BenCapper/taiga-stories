@@ -5,7 +5,6 @@ from github import Github
 
 
 class User_story():
-
     def __init__(self, ref, subject, owner, created, desc = None, labels = None,
                  assigned_to = None, finish = None, closed = None, comments = None):
         self.ref = ref
@@ -19,8 +18,8 @@ class User_story():
         self.closed = closed
         self.comments = comments    
 
-git = Github() # Enter GitHub token
-repo = git.get_repo("BenCapper/taiga-stories") # Enter GitHub namespace
+git = Github('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') # Enter GitHub token
+repo = git.get_repo('BenCapper/taiga-stories') # Enter GitHub namespace
 t = open('fedora_iot.json') # Enter json file
 taiga_export = json.load(t)
 user_stories = taiga_export["user_stories"]
@@ -51,7 +50,8 @@ for story in user_stories:
         repo.create_issue(title=user.subject, body="On " + user.created[0:10] + " at " + user.created[11:]  
                         + ", **" + user.owner + "**" + " said: \n\n" + user.description, labels=user.labels)
         time.sleep(10) # Avoids hitting GitHub secondary rate limits
-        issue = repo.get_issue(count) # Must be a fresh board (Taiga user story ref doesn't match GitHub issue No.)
+        issue = repo.get_issue(count) # Must be a fresh board to start (Taiga user story ref doesn't match GitHub issue No.)
+
         if user.closed is True:
             issue.edit(state='closed')
         else:
@@ -63,7 +63,7 @@ for story in user_stories:
                 issue.create_comment("On " + comm[2][0:10] + " at " + comm[2][11:-5] + ", **" + comm[0] + "**" + " said: \n\n" + comm[1])
                 time.sleep(10)
         open_temp.write(str(ref) + '\n')
-        print("\nUSER == REF: ", user.ref, "\nSUBJECT == ", user.subject,
+        print("\nUSER == \nREF: ", user.ref, "\nSUBJECT == ", user.subject,
              "\nOWNER == ", user.owner, "\nCREATED == ", user.created, "\nDESCRIPTION == ", user.description, 
             "\nLABELS == ", user.labels, "\nASSIGNED_TO == ", user.assigned_to,
              "\nFINISH == ", user.finish, "\nCLOSED == ", user.closed, "\nCOMMENTS == ", user.comments, "\n\n\n\n")
