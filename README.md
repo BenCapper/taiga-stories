@@ -15,7 +15,7 @@ repo = git.get_repo("USERNAME/REPO_NAME")
 
 Enter the exported Taiga export name
 ~~~
-t = open('fedora_iot.json')
+t = open('JSON_FILE')
 ~~~
 
 Run
