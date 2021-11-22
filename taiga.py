@@ -18,7 +18,7 @@ class User_story():
         self.closed = closed
         self.comments = comments    
 
-git = Github('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') # Enter GitHub token
+git = Github('TOKEN') # Enter GitHub token
 repo = git.get_repo('BenCapper/taiga-stories') # Enter GitHub namespace
 t = open('fedora_iot.json') # Enter json file
 taiga_export = json.load(t)
