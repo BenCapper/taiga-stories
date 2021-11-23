@@ -14,7 +14,6 @@ class User_story:
         created,
         desc=None,
         labels=None,
-        assigned_to=None,
         finish=None,
         closed=None,
         comments=None,
@@ -25,19 +24,36 @@ class User_story:
         self.created = created
         self.description = desc
         self.labels = labels
-        self.assigned_to = assigned_to
         self.finish = finish
         self.closed = closed
         self.comments = comments
 
 
-git = Github("TOKEN")  # Enter GitHub token
+git = Github("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")  # Enter GitHub token
 repo = git.get_repo("BenCapper/taiga-stories")  # Enter GitHub namespace
 t = open("fedora_iot.json")  # Enter json file
 taiga_export = json.load(t)
 user_stories = taiga_export["user_stories"]
 count = 0
+labels = []
 ref_list = []
+repo_label_list = []
+label_list = []
+repo_label_list = repo.get_labels()
+for l in repo_label_list:
+    labels.append(l.name)
+label_list = taiga_export["tags_colors"]
+for tag in label_list:
+    if tag[1] is None:
+        tag[1] = '#ffffff'
+    else:
+        pass
+    if tag[0] not in labels:
+        repo.create_label(tag[0], tag[1][1:])
+        time.sleep(1)
+    else:
+        pass
+time.sleep(10)
 # done.temp keeps track of already created issues in case of fail / stop
 if os.path.exists("done.temp"):
     open_temp = open("done.temp", "r")
@@ -55,7 +71,6 @@ for story in user_stories:
         story["created_date"][:-5],
         story["description"],
         story["tags"],
-        story["assigned_users"],
         story["finish_date"],
         story["is_closed"],
         comments,
@@ -126,8 +141,6 @@ for story in user_stories:
             user.description,
             "\nLABELS == ",
             user.labels,
-            "\nASSIGNED_TO == ",
-            user.assigned_to,
             "\nFINISH == ",
             user.finish,
             "\nCLOSED == ",
