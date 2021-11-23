@@ -8,7 +8,7 @@ Enter your GitHub Personal Access Token
 git = Github('TOKEN')
 ~~~
 
-Enter the GitHUb repo namespace
+Enter the GitHub repo namespace
 ~~~
 repo = git.get_repo('USERNAME/REPO_NAME')
 ~~~
